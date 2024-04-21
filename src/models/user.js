@@ -16,8 +16,8 @@ User.init(
     },
     email: {
       type: DataTypes.STRING,
-      unique: true,
       allowNull: false,
+      unique: true,
     },
     password: {
       type: DataTypes.STRING,
@@ -25,10 +25,16 @@ User.init(
     },
   },
   {
-    sequelize, // Instância do Sequelize
+    sequelize,
     modelName: "User",
-    tableName: "users", // Nome da tabela
-    timestamps: true, // Se desejar adicionar createdAt e updatedAt
+    tableName: "users",
+    timestamps: false,
+    hooks: {
+      beforeCreate: async (user) => {
+        const salt = await bcrypt.genSalt(10);
+        user.password = await bcrypt.hash(user.password, salt);
+      },
+    },
   }
 );
 

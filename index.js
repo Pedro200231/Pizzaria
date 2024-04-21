@@ -1,15 +1,41 @@
 const express = require("express");
-const app = express();
+const bodyParser = require("body-parser");
 const sequelize = require("./config/sequelize"); // A instância do Sequelize
 require("./config/associations"); // Importa os relacionamentos
 
-// Autenticação para teste
-sequelize.authenticate().then(() => {
-  console.log("Conexão bem-sucedida com o banco de dados!");
+const app = express();
 
-  // Sincroniza o banco de dados para garantir que os relacionamentos existam
-  sequelize.sync();
+// Middleware para processar JSON nos requests
+app.use(bodyParser.json());
 
-  // Suas rotas, middlewares, etc.
-  app.listen(3000, () => console.log("Servidor rodando na porta 3000"));
-});
+// Rotas de Autenticação
+const authRoutes = require("./src/routes/authRoutes");
+
+// Middleware para autenticação JWT (para rotas protegidas)
+const authMiddleware = require("./src/middlewares/auth");
+
+// Use as rotas de autenticação
+app.use("/auth", authRoutes);
+
+
+// Teste a conexão com o banco de dados e sincronize
+sequelize.authenticate()
+  .then(() => {
+    console.log("Conexão bem-sucedida com o banco de dados!");
+
+    // Sincroniza o banco de dados para garantir que as tabelas existam
+    sequelize.sync();
+
+    // Rota para teste, protegida pelo middleware de autenticação
+    app.get("/protected", authMiddleware, (req, res) => {
+      res.json({ message: "Você está autenticado!", user: req.user });
+    });
+
+    // Inicializa o servidor
+    app.listen(3000, () => {
+      console.log("Servidor rodando na porta 3000");
+    });
+  })
+  .catch((error) => {
+    console.error("Erro ao conectar ao banco de dados:", error);
+  });
