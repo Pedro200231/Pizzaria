@@ -17,6 +17,10 @@ const authMiddleware = require("./src/middlewares/auth");
 // Use as rotas de autenticação
 app.use("/auth", authRoutes);
 
+const userRoutes = require("./src/routes/userRoutes"); // Adicionar novo arquivo de rotas
+
+// Use as novas rotas
+app.use("/users", userRoutes); // Rota para operações com usuários
 
 // Teste a conexão com o banco de dados e sincronize
 sequelize.authenticate()
