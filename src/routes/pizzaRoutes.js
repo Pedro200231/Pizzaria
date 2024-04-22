@@ -4,6 +4,7 @@ const authMiddleware = require("../middlewares/auth");
 const PizzaAd = require("../models/pizza");
 const User = require("../models/user");
 const multerConfig = require("../../config/multer"); // Importar a configuração do Multer
+const { Sequelize } = require("sequelize");
 
 const router = express.Router();
 
@@ -34,11 +35,31 @@ router.post(
   }
 );
 
+// Rota para ver todas as pizzas publicadas
+
+// Rota para listar anúncios de pizzas com filtros opcionais
 router.get("/", async (req, res) => {
   try {
-    const ads = await PizzaAd.findAll({
-      include: [{ model: User, as: "publisher", attributes: ["name", "email"] }], // Inclui informações do usuário que publicou
-    });
+    const { ingredients, maxPrice } = req.query;
+
+    const query = {
+      include: [{ model: User, as: "publisher", attributes: ["name", "email"] }],
+      where: {},
+    };
+
+    if (ingredients) {
+      const ingredientArray = ingredients.split(",").map((item) => item.trim());
+      const likeQueries = ingredientArray.map(
+        (ingredient) => ({ ingredients: { [Sequelize.Op.like]: `%${ingredient}%` } }) // Usando LIKE para buscar ingredientes
+      );
+      query.where[Sequelize.Op.and] = likeQueries; // Todos os ingredientes devem estar presentes
+    }
+
+    if (maxPrice) {
+      query.where.price = { [Sequelize.Op.lte]: parseFloat(maxPrice) }; // Verifica se é menor ou igual ao preço máximo
+    }
+
+    const ads = await PizzaAd.findAll(query);
 
     return res.status(200).json({ message: "Anúncios de pizzas obtidos com sucesso", ads });
   } catch (error) {
@@ -48,3 +69,4 @@ router.get("/", async (req, res) => {
 });
 
 module.exports = router;
+
