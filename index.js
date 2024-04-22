@@ -22,6 +22,11 @@ const userRoutes = require("./src/routes/userRoutes"); // Adicionar novo arquivo
 // Use as novas rotas
 app.use("/users", userRoutes); // Rota para operações com usuários
 
+const pizzaRoutes = require('./src/routes/pizzaRoutes'); // Certifique-se do caminho correto
+
+app.use('/pizza', pizzaRoutes); // Verifique se está configurado corretamente
+
+
 // Teste a conexão com o banco de dados e sincronize
 sequelize.authenticate()
   .then(() => {
