@@ -1,7 +1,6 @@
-// models/pizza.js
 const { Model, DataTypes } = require("sequelize");
 const sequelize = require("../../config/sequelize");
-const User = require("./user"); // Certifique-se de importar o modelo User
+const User = require("./user"); 
 
 class Pizza extends Model {}
 
@@ -27,21 +26,21 @@ Pizza.init(
       allowNull: true,
     },
     ingredients: {
-      type: DataTypes.TEXT, // Use TEXT para maior compatibilidade
+      type: DataTypes.TEXT, 
       allowNull: true,
       get() {
         const rawValue = this.getDataValue("ingredients");
         try {
-          return JSON.parse(rawValue); // Tenta parsear como JSON
+          return JSON.parse(rawValue); 
         } catch (e) {
-          return rawValue ? rawValue.split(",") : []; // Se não for JSON, divide por vírgula
+          return rawValue ? rawValue.split(",") : []; 
         }
       },
       set(value) {
         if (Array.isArray(value)) {
-          this.setDataValue("ingredients", JSON.stringify(value)); // Salva como JSON
+          this.setDataValue("ingredients", JSON.stringify(value)); 
         } else {
-          this.setDataValue("ingredients", value); // Se já for texto, apenas salva
+          this.setDataValue("ingredients", value); 
         }
       },
     },

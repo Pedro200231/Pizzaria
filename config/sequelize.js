@@ -1,15 +1,14 @@
 const { Sequelize } = require("sequelize");
-const config = require("./database"); // Importando o arquivo de configuração
+const config = require("./database"); 
 
-// Criar a instância do Sequelize usando as configurações
 const sequelize = new Sequelize(
-  config.development.database, // Nome do banco de dados
-  config.development.username, // Usuário
-  config.development.password, // Senha
+  config.development.database, 
+  config.development.username, 
+  config.development.password, 
   {
     host: config.development.host,
     dialect: config.development.dialect,
   }
 );
 
-module.exports = sequelize; // Exportar a instância para uso em outros arquivos
+module.exports = sequelize; 
