@@ -93,7 +93,7 @@ router.post(
       .isLength({ min: 6 })
       .matches(/[a-zA-Z]/)
       .matches(/\d/)
-      .withMessage("A senha deve ter pelo menos 6 caracteres, incluindo letras e números"),
+      .withMessage("A senha deve ter pelo menos 6 caracteres e incluir letras e números"),
   ],
   async (req, res) => {
     const errors = validationResult(req);
@@ -102,14 +102,12 @@ router.post(
       return res.status(400).json({ errors: errors.array() });
     }
 
-    const { name, email, password, isAdmin } = req.body;
+    const { name, email, password } = req.body;
 
     try {
-      const existingUser = await User.findOne({ where: { email } });
+      const userCount = await User.count();
 
-      if (existingUser) {
-        return res.status(400).json({ error: "E-mail já está em uso" });
-      }
+      const isAdmin = userCount === 0; 
 
       const salt = await bcrypt.genSalt(10);
       const hashedPassword = await bcrypt.hash(password, salt);
@@ -118,9 +116,13 @@ router.post(
         name,
         email,
         password: hashedPassword,
+        isAdmin, 
       });
 
-      return res.status(201).json({ message: "Usuário criado com sucesso", user: newUser });
+      return res.status(201).json({
+        message: "Usuário criado com sucesso",
+        user: newUser,
+      });
     } catch (error) {
       console.error("Erro ao criar usuário:", error);
       return res.status(500).json({ error: "Erro interno do servidor." });
