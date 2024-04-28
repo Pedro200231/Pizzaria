@@ -23,7 +23,7 @@ Este projeto é uma aplicação web back-end para publicações de uma pizzaria.
    cd [diretório do projeto]
 
 ## Instale as dependências do projeto:
-'''shell
+```shell
  npm install
 
 ## Configuração do Projeto
