@@ -1,4 +1,4 @@
-### Projeto Pizzaria - Backend
+# Projeto Pizzaria - Backend
 
 ## Introdução
 Este projeto é uma aplicação web back-end para publicações de uma pizzaria. Ele permite que usuários cadastrem anúncios de pizzas, façam login, publiquem comentários e curtidas, entre outras funcionalidades.
@@ -23,7 +23,8 @@ Este projeto é uma aplicação web back-end para publicações de uma pizzaria.
    cd [diretório do projeto]
 
 ## Instale as dependências do projeto:
-- npm install
+'''shell
+ npm install
 
 ## Configuração do Projeto
 Verifique se o banco de dados foi criado e está acessível.
@@ -38,23 +39,23 @@ Inicie o servidor:
 ## Endpoints Disponíveis
 - Aqui está uma lista dos endpoints disponíveis e suas funções:
 
-# Autenticação
+### Autenticação
 - POST /auth/login: Realiza o login na aplicação. Requer email e password. Retorna um token JWT para autenticação.
 - POST /auth/register: Registra um novo usuário. Requer name, email, e password.
   
-# Usuários
+### Usuários
 - GET /users: Retorna uma lista de todos os usuários. Apenas administradores podem acessar.
 - GET /users/:id: Retorna informações sobre um usuário específico. Apenas administradores podem acessar.
 - PUT /users/me: Permite que um usuário autenticado atualize seu próprio nome e senha.
 - PUT /users/:id: Permite que um administrador atualize informações de um usuário específico.
 - DELETE /users/:id: Permite que um administrador exclua um usuário específico.
   
-# Anúncios de Pizza
+### Anúncios de Pizza
 - POST /pizzaAds: Cria um novo anúncio de pizza. Requer autenticação. Deve incluir name, description, ingredients, price, e uma imagem opcional.
 - GET /pizzaAds: Retorna uma lista de todos os anúncios de pizza.
 - GET /pizzaAds?ingredient=INGREDIENTE: Filtra os anúncios de pizza por ingrediente.
 - GET /pizzaAds?maxPrice=PRECO: Filtra os anúncios de pizza por preço máximo.
-# Comentários e Curtidas
+### Comentários e Curtidas
 - POST /pizzaAds/:pizzaId/comments: Adiciona um comentário a um anúncio de pizza. Requer text.
 - GET /pizzaAds/:pizzaId/comments: Lista todos os comentários para um anúncio de pizza.
 - POST /pizzaAds/:pizzaId/like: Curte um anúncio de pizza.
