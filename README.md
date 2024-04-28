@@ -50,11 +50,11 @@ Inicie o servidor:
 - DELETE /users/:id: Permite que um administrador exclua um usuário específico.
   
 ### Anúncios de Pizza
-- POST /pizzaAds: Cria um novo anúncio de pizza. Requer autenticação. Deve incluir name, description, ingredients, price, e uma imagem opcional.
-- GET /pizzaAds: Retorna uma lista de todos os anúncios de pizza.
-- GET /pizzaAds?ingredient=INGREDIENTE: Filtra os anúncios de pizza por ingrediente.
-- GET /pizzaAds?maxPrice=PRECO: Filtra os anúncios de pizza por preço máximo.
+- POST /pizza: Cria um novo anúncio de pizza. Requer autenticação. Deve incluir name, description, ingredients, price, e uma imagem opcional.
+- GET /pizza: Retorna uma lista de todos os anúncios de pizza.
+- GET /pizza?ingredient=INGREDIENTE: Filtra os anúncios de pizza por ingrediente.
+- GET /pizza?maxPrice=PRECO: Filtra os anúncios de pizza por preço máximo.
 ### Comentários e Curtidas
-- POST /pizzaAds/:pizzaId/comments: Adiciona um comentário a um anúncio de pizza. Requer text.
-- GET /pizzaAds/:pizzaId/comments: Lista todos os comentários para um anúncio de pizza.
-- POST /pizzaAds/:pizzaId/like: Curte um anúncio de pizza.
+- POST /pizza/:pizzaId/comments: Adiciona um comentário a um anúncio de pizza. Requer text.
+- GET /pizza/:pizzaId/comments: Lista todos os comentários para um anúncio de pizza.
+- POST /pizza/:pizzaId/like: Curte um anúncio de pizza.
