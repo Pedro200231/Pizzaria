@@ -23,8 +23,7 @@ Este projeto é uma aplicação web back-end para publicações de uma pizzaria.
    cd [diretório do projeto]
 
 ## Instale as dependências do projeto:
-```shell
- npm install
+ - npm install
 
 ## Configuração do Projeto
 Verifique se o banco de dados foi criado e está acessível.
