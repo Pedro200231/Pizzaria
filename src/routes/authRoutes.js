@@ -107,16 +107,13 @@ router.post(
     try {
       const userCount = await User.count();
 
-      const isAdmin = userCount === 0; 
-
-      const salt = await bcrypt.genSalt(10);
-      const hashedPassword = await bcrypt.hash(password, salt);
+      const isAdmin = userCount === 0;
 
       const newUser = await User.create({
         name,
         email,
-        password: hashedPassword,
-        isAdmin, 
+        password, 
+        isAdmin,
       });
 
       return res.status(201).json({
@@ -129,5 +126,6 @@ router.post(
     }
   }
 );
+
 
 module.exports = router;
